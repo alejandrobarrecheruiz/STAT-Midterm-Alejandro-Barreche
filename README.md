@@ -1,7 +1,7 @@
 # STAT Methods for Digital Twins — SIR Model for COVID-19 Analysis
 
 ## Project Overview
-This repository contains a comprehensive analysis of the COVID-19 pandemic in the United States using the SIR (Susceptible-Infectious-Recovered) epidemiological model. The project demonstrates the application of statistical methods and numerical optimization techniques to fit real-world epidemiological data.
+This repository contains a comprehensive analysis of the COVID-19 pandemic in the United States using the SIR (Susceptible-Infectious-Recovered) epidemiological model. The project demonstrates the application of statistical methods and numerical optimization techniques to fit real-world epidemiological data for different US counties.
 
 ### What is SIR?
 The SIR model is a fundamental epidemiological model that divides a population into three compartments:
@@ -30,17 +30,23 @@ Where:
 - `material/US_covid19_deaths.csv`: Time series data of COVID-19 deaths in the US
 
 ### Analysis Notebooks
-1. `1_SIR_estimate.ipynb`: Initial implementation
+Both notebooks implement the same SIR model analysis workflow but for different US counties:
+
+1. `1_SIR_estimate.ipynb`: Analysis for the first set of counties
    - Data loading and preprocessing
    - SIR model implementation
-   - Basic parameter estimation
-   - Initial visualizations
+   - Parameter estimation using SciPy optimizers
+   - Visualizations of model fit
 
-2. `2_SIR_estimate.ipynb`: Enhanced analysis
-   - Advanced parameter tuning
-   - Alternative optimization approaches
-   - Extended diagnostics
-   - Refined visualizations
+2. `2_SIR_estimate.ipynb`: Analysis for a different set of counties
+   - Same implementation and workflow as notebook 1
+   - Applied to different geographical regions
+
+The notebooks share the same core functionality:
+- Loading and processing county-specific data
+- Implementing the SIR differential equations
+- Estimating model parameters using optimization
+- Visualizing the results and model fit
 
 ## Technical Details
 
@@ -54,7 +60,7 @@ Where:
 
 ### Key Components
 1. **Data Processing**
-   - Loading and cleaning time series data
+   - Loading and cleaning time series data per county
    - Data normalization and preparation
 
 2. **Model Implementation**
@@ -62,15 +68,13 @@ Where:
    - Numerical integration using `scipy.integrate.solve_ivp`
 
 3. **Parameter Estimation**
-   - Optimization using various SciPy solvers:
-     - `least_squares`: For basic fitting
-     - `differential_evolution`: For global optimization
-     - `minimize`: For constrained optimization
+   - Optimization using SciPy solvers:
+     - `least_squares` for fitting the SIR model parameters
+     - Optimization of β (infection rate) and γ (recovery rate)
 
 4. **Visualization**
-   - Time series plots
-   - Model fit comparisons
-   - Diagnostic visualizations
+   - Time series plots of actual vs. predicted cases
+   - Model fit visualization for each county
 
 ## Installation Guide
 
@@ -142,10 +146,11 @@ Where:
 
 ### Running the Analysis
 
-1. In JupyterLab, navigate to `1_SIR_estimate.ipynb`
+1. In JupyterLab, navigate to either notebook:
+   - `1_SIR_estimate.ipynb` for the first set of counties
+   - `2_SIR_estimate.ipynb` for the second set of counties
 2. Execute cells sequentially (Shift + Enter)
-3. Review outputs and visualizations
-4. Proceed to `2_SIR_estimate.ipynb` for advanced analysis
+3. Review outputs and visualizations for each county
 
 ### Troubleshooting
 
