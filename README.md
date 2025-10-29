@@ -1,73 +1,180 @@
-# STAT Methods for Digital Twins — Midterm Project
+# STAT Methods for Digital Twins — SIR Model for COVID-19 Analysis
 
-This repository contains my midterm submission for STAT Methods for Digital Twins.  
-The deliverable focuses on fitting and evaluating an epidemiological SIR model against
-United States COVID-19 case and mortality data. Two Jupyter notebooks walk through data
-preparation, parameter estimation with SciPy optimizers, and visualization of the model
-fit.
+## Project Overview
+This repository contains a comprehensive analysis of the COVID-19 pandemic in the United States using the SIR (Susceptible-Infectious-Recovered) epidemiological model. The project demonstrates the application of statistical methods and numerical optimization techniques to fit real-world epidemiological data.
 
-## Repository structure
-- `1_SIR_estimate.ipynb` – First pass at the SIR calibration workflow: data loading,
-  helper functions for the SIR differential equations, parameter estimation, and plots.
-- `2_SIR_estimate.ipynb` – Follow-up exploration with alternative tuning and diagnostics
-  while keeping the same core workflow; use this as the latest iteration of the analysis.
-- `material/US_covid19_confirmed.csv` – Johns Hopkins style cumulative confirmed case counts.
-- `material/US_covid19_deaths.csv` – Johns Hopkins style cumulative mortality counts.
-- `requirements.txt` – Minimal Python dependencies needed to execute the notebooks.
+### What is SIR?
+The SIR model is a fundamental epidemiological model that divides a population into three compartments:
+- **S**usceptible: People who can become infected
+- **I**nfectious: People who have the disease and can spread it
+- **R**ecovered: People who have recovered and are assumed to be immune
 
-All notebooks assume the data remain in the `material/` directory relative to the
-repository root.
+The model is described by a system of differential equations:
 
-## Getting started
-These instructions assume Python 3.10+ is available on your machine. Replace `python`
-with `python3` if your operating system requires it.
+$$
+\begin{align*}
+\frac{dS}{dt} &= -\beta SI \\
+\frac{dI}{dt} &= \beta SI - \gamma I \\
+\frac{dR}{dt} &= \gamma I
+\end{align*}
+$$
 
-### 1. Copy the repository
-```bash
-git clone https://github.com/alejandrobarrecheruiz/STAT-Midterm-Alejandro-Barreche.git
-cd STAT-Midterm-Alejandro-Barreche
-```
-If you received the project as a `.zip`, unzip it and `cd` into the uncompressed folder
-instead of cloning.
+Where:
+- β (beta) is the infection rate
+- γ (gamma) is the recovery rate
 
-### 2. Create and configure an environment
-Pick one of the options below to isolate the project dependencies.
+## Project Structure
 
-**Option A – Conda environment**
-```bash
-conda create -n stat-midterm python=3.10
-conda activate stat-midterm
-pip install -r requirements.txt
-```
+### Data Files
+- `material/US_covid19_confirmed.csv`: Time series data of confirmed COVID-19 cases in the US
+- `material/US_covid19_deaths.csv`: Time series data of COVID-19 deaths in the US
 
-**Option B – Python virtual environment (venv)**
-```bash
-python -m venv .venv
-source .venv/bin/activate            # On Windows use: .venv\Scripts\activate
-pip install --upgrade pip
-pip install -r requirements.txt
-```
+### Analysis Notebooks
+1. `1_SIR_estimate.ipynb`: Initial implementation
+   - Data loading and preprocessing
+   - SIR model implementation
+   - Basic parameter estimation
+   - Initial visualizations
 
-**Option C – Global interpreter (not recommended)**
-```bash
-pip install --user --upgrade pip
-pip install --user -r requirements.txt
-```
-Installing globally can affect other projects, so prefer Conda or `venv` whenever
-possible.
+2. `2_SIR_estimate.ipynb`: Enhanced analysis
+   - Advanced parameter tuning
+   - Alternative optimization approaches
+   - Extended diagnostics
+   - Refined visualizations
 
-### 3. Run the notebooks
-Launch your preferred notebook interface once the dependencies are installed.
-```bash
-jupyter lab
-# or
-jupyter notebook
-```
-Open `1_SIR_estimate.ipynb` or `2_SIR_estimate.ipynb` and run the cells top to bottom.
-The notebooks expect the CSV files in `material/` to remain untouched.
+## Technical Details
 
-## Notes
-- The notebooks rely on SciPy’s optimizers (`least_squares`, `differential_evolution`,
-  `minimize`) and on `scipy.integrate.solve_ivp` for solving the SIR model.
-- Feel free to duplicate a notebook if you want to experiment; keep the `material/`
-  directory path unchanged so the data loads correctly.
+### Core Dependencies
+- Python 3.10+
+- NumPy: Numerical computations
+- SciPy: Optimization and differential equation solving
+- Pandas: Data manipulation
+- Matplotlib: Data visualization
+- JupyterLab: Interactive computing environment
+
+### Key Components
+1. **Data Processing**
+   - Loading and cleaning time series data
+   - Data normalization and preparation
+
+2. **Model Implementation**
+   - SIR differential equations
+   - Numerical integration using `scipy.integrate.solve_ivp`
+
+3. **Parameter Estimation**
+   - Optimization using various SciPy solvers:
+     - `least_squares`: For basic fitting
+     - `differential_evolution`: For global optimization
+     - `minimize`: For constrained optimization
+
+4. **Visualization**
+   - Time series plots
+   - Model fit comparisons
+   - Diagnostic visualizations
+
+## Installation Guide
+
+### Prerequisites
+1. Install Python 3.10 or later
+   - Windows: Download from [python.org](https://www.python.org/downloads/)
+   - macOS: `brew install python@3.10`
+   - Linux: `sudo apt-get install python3.10`
+
+2. Install Git (optional, for cloning)
+   - Windows: Download from [git-scm.com](https://git-scm.com/download/win)
+   - macOS: `brew install git`
+   - Linux: `sudo apt-get install git`
+
+### Setup Instructions
+
+1. **Get the Code**
+
+   Option A - Using Git:
+   ```bash
+   git clone https://github.com/alejandrobarrecheruiz/STAT-Midterm-Alejandro-Barreche.git
+   cd STAT-Midterm-Alejandro-Barreche
+   ```
+
+   Option B - Manual Download:
+   - Download the ZIP from GitHub
+   - Extract to your preferred location
+   - Open terminal/command prompt in the extracted folder
+
+2. **Set Up Python Environment**
+
+   Option A - Using Conda (Recommended for beginners):
+   ```bash
+   # Install Miniconda if you haven't already
+   # Create and activate environment
+   conda create -n covid-sir python=3.10
+   conda activate covid-sir
+   
+   # Install dependencies
+   pip install -r requirements.txt
+   ```
+
+   Option B - Using venv (For Python purists):
+   ```bash
+   # Create virtual environment
+   python -m venv .venv
+   
+   # Activate virtual environment
+   # On macOS/Linux:
+   source .venv/bin/activate
+   # On Windows:
+   .venv\Scripts\activate
+   
+   # Update pip and install dependencies
+   pip install --upgrade pip
+   pip install -r requirements.txt
+   ```
+
+3. **Verify Installation**
+   ```bash
+   python -c "import numpy; import pandas; import scipy; import matplotlib; print('All dependencies installed successfully!')"
+   ```
+
+4. **Launch Jupyter**
+   ```bash
+   jupyter lab
+   ```
+   This will open JupyterLab in your default web browser.
+
+### Running the Analysis
+
+1. In JupyterLab, navigate to `1_SIR_estimate.ipynb`
+2. Execute cells sequentially (Shift + Enter)
+3. Review outputs and visualizations
+4. Proceed to `2_SIR_estimate.ipynb` for advanced analysis
+
+### Troubleshooting
+
+1. **Python Version Issues**
+   - Run `python --version` to verify Python 3.10+
+   - If using `python3`, replace `python` with `python3` in commands
+
+2. **Package Installation Issues**
+   ```bash
+   # Upgrade pip
+   pip install --upgrade pip
+   
+   # Force reinstall dependencies
+   pip install --force-reinstall -r requirements.txt
+   ```
+
+3. **Jupyter Issues**
+   ```bash
+   # Clear Jupyter cache
+   jupyter lab clean
+   jupyter lab build
+   ```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## License
+This project is available for academic and research purposes. Please cite appropriately if used in research work.
