@@ -24,7 +24,7 @@ with `python3` if your operating system requires it.
 
 ### 1. Copy the repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/alejandrobarrecheruiz/STAT-Midterm-Alejandro-Barreche.git
 cd STAT-Midterm-Alejandro-Barreche
 ```
 If you received the project as a `.zip`, unzip it and `cd` into the uncompressed folder
